@@ -1,0 +1,19 @@
+district_name,income_tier,projected_evs,projected_plugs,projected_regular_customers
+Indiranagar,High,3200,97,640
+Koramangala,High,2900,88,580
+Whitefield,High,2000,61,400
+Jayanagar,Mid-Range,3600,109,720
+Rajajinagar,Mid-Range,3400,103,680
+HSR Layout,Mid-Range,3100,94,620
+Banashankari,Mid-Range,2500,76,500
+Marathahalli,Mid-Range,1700,52,340
+JP Nagar,Mid-Range,1300,39,260
+Electronic City,Mid-Range,1100,33,220
+Yelahanka,Low-Mid,2600,79,520
+Hebbal,Low-Mid,2000,61,400
+Kengeri,Low-Mid,1500,46,300
+Bommanahalli,Low-Mid,1200,36,240
+Dasarahalli,Low-Mid,1000,30,200
+Rajarajeshwari Nagar,Low-Mid,800,24,160
+Anekal,Low-Mid,700,21,140
+Byatarayanapura,Low-Mid,600,18,120

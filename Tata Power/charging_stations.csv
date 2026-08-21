@@ -1,0 +1,66 @@
+station_id,district_name,income_tier,operator_name,plugs_count,latitude,longitude
+2,Jayanagar,Mid-Range,BPCL Pulse,6,12.920483,77.610026
+7,Marathahalli,Mid-Range,BPCL Pulse,6,12.967452,77.704652
+8,Banashankari,Mid-Range,BPCL Pulse,6,12.913817,77.553316
+9,Hebbal,Low-Mid,BPCL Pulse,6,13.019591,77.610282
+12,Jayanagar,Mid-Range,Tata Power,6,12.92864,77.601291
+18,Electronic City,Mid-Range,Statiq,6,12.822641,77.693917
+21,Koramangala,High,BPCL Pulse,6,12.947168,77.614144
+23,Indiranagar,High,Tata Power,6,12.966946,77.629403
+24,Yelahanka,Low-Mid,BPCL Pulse,6,13.093653,77.597191
+25,Byatarayanapura,Low-Mid,Tata Power,6,13.06155,77.541484
+26,HSR Layout,Mid-Range,ChargeZone,6,12.915627,77.625922
+27,Indiranagar,High,BPCL Pulse,6,12.970917,77.635989
+29,HSR Layout,Mid-Range,ChargeZone,6,12.910019,77.649166
+32,Kengeri,Low-Mid,Ather Grid,6,12.897688,77.483412
+36,Rajajinagar,Mid-Range,BPCL Pulse,6,12.994127,77.536072
+40,Yelahanka,Low-Mid,Statiq,6,13.104572,77.584439
+41,Whitefield,High,ChargeZone,6,12.954142,77.76606
+50,Electronic City,Mid-Range,Ather Grid,6,12.856663,77.688102
+51,Indiranagar,High,Statiq,6,12.971366,77.626316
+56,HSR Layout,Mid-Range,Tata Power,6,12.918232,77.636745
+57,Jayanagar,Mid-Range,Ather Grid,6,12.911393,77.593626
+58,Kengeri,Low-Mid,Tata Power,6,12.891738,77.497636
+59,Dasarahalli,Low-Mid,ChargeZone,6,13.024116,77.512351
+60,Electronic City,Mid-Range,Tata Power,6,12.833122,77.677722
+63,Rajarajeshwari Nagar,Low-Mid,Statiq,6,12.929682,77.494355
+68,Banashankari,Mid-Range,ChargeZone,6,12.943105,77.575605
+71,Hebbal,Low-Mid,BPCL Pulse,6,13.051322,77.611314
+72,Koramangala,High,ChargeZone,6,12.938724,77.639687
+75,Rajarajeshwari Nagar,Low-Mid,Statiq,6,12.913186,77.494755
+76,JP Nagar,Mid-Range,BPCL Pulse,6,12.890428,77.578812
+87,Anekal,Low-Mid,BPCL Pulse,6,12.707992,77.687469
+88,Whitefield,High,BPCL Pulse,6,12.981635,77.744743
+89,Byatarayanapura,Low-Mid,Tata Power,6,13.056114,77.550537
+92,Rajajinagar,Mid-Range,ChargeZone,6,12.977873,77.563279
+93,Koramangala,High,ChargeZone,6,12.919884,77.642028
+97,JP Nagar,Mid-Range,Ather Grid,6,12.916601,77.574254
+98,Whitefield,High,Statiq,6,12.951999,77.761257
+108,Marathahalli,Mid-Range,Tata Power,6,12.966547,77.709344
+109,Dasarahalli,Low-Mid,Ather Grid,6,13.042566,77.491166
+115,Bommanahalli,Low-Mid,Ather Grid,6,12.890905,77.608071
+118,Dasarahalli,Low-Mid,Statiq,6,13.045872,77.510939
+130,Whitefield,High,Ather Grid,6,12.963712,77.734188
+138,Banashankari,Mid-Range,Ather Grid,6,12.919395,77.559407
+140,Rajajinagar,Mid-Range,Ather Grid,6,12.999066,77.557352
+142,Kengeri,Low-Mid,ChargeZone,6,12.92244,77.4819
+144,Rajajinagar,Mid-Range,Tata Power,6,12.977105,77.560077
+147,Electronic City,Mid-Range,Ather Grid,6,12.849288,77.679206
+151,Jayanagar,Mid-Range,Ather Grid,6,12.934755,77.593577
+152,Marathahalli,Mid-Range,ChargeZone,6,12.959918,77.698491
+155,Bommanahalli,Low-Mid,Statiq,6,12.878915,77.607784
+157,Koramangala,High,Ather Grid,6,12.918331,77.629411
+164,Hebbal,Low-Mid,BPCL Pulse,6,13.028817,77.597409
+167,Yelahanka,Low-Mid,Statiq,6,13.115372,77.587275
+168,Indiranagar,High,Ather Grid,6,12.975174,77.65
+174,JP Nagar,Mid-Range,ChargeZone,6,12.897037,77.569871
+180,Jayanagar,Mid-Range,ChargeZone,6,12.917431,77.581604
+181,Marathahalli,Mid-Range,Statiq,6,12.974569,77.712192
+182,Banashankari,Mid-Range,ChargeZone,6,12.931003,77.579073
+185,Anekal,Low-Mid,Tata Power,6,12.722932,77.684417
+186,Rajarajeshwari Nagar,Low-Mid,Tata Power,6,12.942132,77.507116
+188,HSR Layout,Mid-Range,Statiq,6,12.922668,77.653159
+189,Indiranagar,High,Statiq,6,12.971848,77.626762
+190,JP Nagar,Mid-Range,Tata Power,6,12.897006,77.582476
+196,Bommanahalli,Low-Mid,Statiq,6,12.907449,77.634886
+197,Rajajinagar,Mid-Range,Tata Power,6,12.97305,77.552787

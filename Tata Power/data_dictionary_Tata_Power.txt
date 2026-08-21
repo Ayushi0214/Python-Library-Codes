@@ -1,0 +1,449 @@
+================================================================================
+TATA POWER – EV CHARGING NETWORK EXPANSION
+DATA DICTIONARY
+================================================================================
+Project       : Bengaluru EV Infrastructure Planning Dashboard
+Analyst       : Tata Power Data Analytics Team
+Datasets      : 5
+Total Tables  : 5
+Last Updated  : April 2026 (post data quality fixes)
+--------------------------------------------------------------------------------
+NOTE ON FIXES APPLIED
+  roi_bengaluru_districts was corrected before this dictionary was produced:
+  (1) 23 projects with negative 5yr ROI were reclassified from Priority_Tier
+      'Medium' to 'Low'. A negative ROI project cannot be medium priority.
+  (2) A new column 'Capitalized_Land_Lease_10yr_Lakh' was added to make the
+      Total_CAPEX formula fully transparent. Total_CAPEX includes 10 years of
+      land lease capitalised per Ind AS 116 lease accounting standards.
+  All other four datasets were clean and required no changes.
+================================================================================
+
+
+================================================================================
+TABLE 1: roi_bengaluru_districts.csv
+================================================================================
+Description : Master ROI and financial planning table for 98 proposed EV
+              charging station projects across 18 districts of Bengaluru.
+              Contains capital cost breakdown, revenue projections, payback
+              metrics, subsidy eligibility, and investment priority tiers.
+Rows        : 98
+Columns     : 26
+Primary Key : Project_ID
+Joins to    : districts.csv  via  District = district_name
+--------------------------------------------------------------------------------
+
+COLUMN              DATA TYPE   RANGE / VALUES            DESCRIPTION
+--------------------------------------------------------------------------------
+Project_ID          Text        BLR-PRJ001 to             Unique identifier for each
+                                BLR-PRJ098                proposed charging station
+                                                          project. Format: BLR-PRJxxx.
+
+District            Text        18 distinct values        Name of the Bengaluru district
+                                e.g. Indiranagar,         where the project is proposed.
+                                Koramangala,              Maps to district_name in
+                                Whitefield                districts.csv.
+
+Income_Tier         Text        High                      Economic classification of the
+                                Mid-Range                 district based on average
+                                Low-Mid                   household income level.
+                                                          High = affluent areas (e.g.
+                                                          Indiranagar, Koramangala).
+                                                          Mid-Range = middle-income areas.
+                                                          Low-Mid = lower-middle income
+                                                          peripheral zones.
+
+Proposed_Site_Type  Text        Mall / Retail             Type of physical location where
+                                Petrol Station            the charging station would be
+                                Fleet Depot               installed. Determines footfall
+                                Public Parking            patterns, dwell time, and
+                                Bus Depot                 charger type suitability.
+                                Office / IT Park
+                                Residential Complex
+
+Charger_Type        Text        AC Level-2 (7.4 kW)      Technology category of the
+                                AC Level-2 (22 kW)        charger. AC Level-2 chargers
+                                DC Fast (50 kW)           are slower and cheaper; suited
+                                DC Ultra-Fast (150 kW)    for long-dwell locations.
+                                                          DC Fast/Ultra-Fast are for
+                                                          quick top-ups; higher CAPEX.
+
+Charger_kW          Decimal     7.4 to 150.0              Power output of the charger in
+                                                          kilowatts. Directly corresponds
+                                                          to Charger_Type. Higher kW =
+                                                          faster charging = higher
+                                                          equipment cost.
+
+No_of_Guns          Integer     4 to 14                   Number of charging connectors
+                                                          (guns) at the proposed station.
+                                                          Each gun serves one vehicle
+                                                          simultaneously.
+
+Equipment_Cost_Lakh Decimal     8.4 to 242.0              Cost of procuring and installing
+                                                          the charging hardware in Indian
+                                                          Rupees (Lakhs). Scales with
+                                                          charger type and gun count.
+
+Civil_Work_Lakh     Decimal     1.94 to 94.06             Civil construction costs in
+                                                          Lakhs: foundation work, canopy,
+                                                          flooring, signage, and site
+                                                          preparation.
+
+Electrical_         Decimal     1.81 to 80.26             Electrical infrastructure costs
+Infra_Lakh                                                in Lakhs: cabling, transformers,
+                                                          power connection, metering, and
+                                                          protection equipment.
+
+Land_Lease_         Decimal     2.6 to 9.46               Annual land lease or rental
+Annual_Lakh                                               cost in Lakhs for the station
+                                                          site. This is a recurring
+                                                          operational expense.
+
+Capitalized_Land_   Decimal     26.0 to 94.6              10-year capitalisation of the
+Lease_10yr_Lakh                                           annual land lease, included in
+                   [ADDED]                                Total_CAPEX per Ind AS 116
+                                                          lease accounting. Calculated as:
+                                                          Land_Lease_Annual_Lakh × 10.
+                                                          Added in data quality fix to
+                                                          make the CAPEX formula explicit.
+
+Total_CAPEX_Lakh    Decimal     54.29 to 497.48           Total capital expenditure for
+                                                          the project in Lakhs. Formula:
+                                                          Equipment + Civil_Work +
+                                                          Electrical_Infra +
+                                                          Capitalized_Land_Lease_10yr.
+                                                          This is the base for all ROI
+                                                          and payback calculations.
+
+Tariff_Rs_per_kWh   Decimal     13.5 / 18.0 / 22.5        Electricity tariff charged to
+                                                          customers per kWh in Rupees.
+                                                          Three tiers reflecting charger
+                                                          speed: 13.5 for slow AC,
+                                                          18.0 for mid-speed, 22.5 for
+                                                          fast DC charging.
+
+Annual_Revenue_     Decimal     14.51 to 96.99            Projected annual revenue from
+Lakh                                                      the station in Lakhs, based on
+                                                          expected utilisation, number of
+                                                          guns, charger speed, and tariff.
+
+Annual_OPEX_Lakh    Decimal     4.27 to 29.17             Annual operating expenditure in
+                                                          Lakhs. Includes electricity
+                                                          procurement, maintenance,
+                                                          staff, insurance, and annual
+                                                          land lease (recurring portion).
+
+Annual_EBITDA_Lakh  Decimal     10.24 to 67.82            Earnings before interest, tax,
+                                                          depreciation and amortisation,
+                                                          in Lakhs. Calculated as:
+                                                          Annual_Revenue - Annual_OPEX.
+                                                          Represents the station's annual
+                                                          cash generation capacity.
+
+Payback_Period_Yrs  Decimal     1.6 to 11.8               Number of years to recover the
+                                                          total CAPEX from EBITDA.
+                                                          Formula: Total_CAPEX /
+                                                          Annual_EBITDA. Projects under
+                                                          4 years are classified High
+                                                          priority.
+
+Govt_Subsidy_       Text        Yes                       Whether the project qualifies
+Eligible                        No                        for government subsidy under
+                                                          FAME-II or state EV policy
+                                                          schemes. 55 of 98 projects
+                                                          are eligible.
+
+Subsidy_Amount_     Decimal     0.0 to 41.53              Government subsidy amount
+Lakh                                                      receivable in Lakhs. Zero for
+                                                          non-eligible projects.
+
+Adj_Payback_After_  Decimal     1.4 to 11.4               Adjusted payback period after
+Subsidy                                                   deducting subsidy from CAPEX.
+                                                          Formula: (Total_CAPEX -
+                                                          Subsidy_Amount) / Annual_EBITDA.
+
+5yr_ROI_Pct         Decimal     -57.5 to +213.0           Return on investment over a
+                                                          5-year horizon, expressed as
+                                                          a percentage. Formula:
+                                                          ((EBITDA×5 - Total_CAPEX) /
+                                                          Total_CAPEX) × 100. Negative
+                                                          values indicate the project
+                                                          does not recover CAPEX in 5
+                                                          years.
+
+Priority_Tier       Text        High                      Investment priority rating.
+                   [FIXED]      Medium                    Determined by ROI and payback.
+                                Low                       High: ROI > ~15%, payback < 4.5
+                                                          yrs. Medium: borderline positive
+                                                          ROI (0–21%), payback 4–6 yrs.
+                                                          Low: negative ROI or payback
+                                                          beyond 7 years.
+                                                          NOTE: 23 projects corrected
+                                                          from Medium to Low during data
+                                                          quality fix (negative ROI cannot
+                                                          be Medium priority).
+                                                          Distribution: High=54, Low=37,
+                                                          Medium=7.
+
+Existing_Stations_  Integer     2 to 5                    Number of EV charging stations
+District                                                  already operational in that
+                                                          district at time of planning.
+                                                          Used to assess existing supply
+                                                          before adding new capacity.
+
+Projected_EVs_      Integer     600 to 3,600              Forecasted number of electric
+District                                                  vehicles expected to be
+                                                          registered and operating in the
+                                                          district within the planning
+                                                          horizon. Key demand indicator.
+
+Projected_Plugs_    Integer     18 to 109                 Total number of charging plugs
+District                                                  projected to be needed across
+                                                          all stations in the district
+                                                          based on EV density and usage
+                                                          patterns.
+================================================================================
+
+
+================================================================================
+TABLE 2: charging_sessions.csv
+================================================================================
+Description : Transactional log of 114,000 individual EV charging sessions
+              across all 65 stations in Bengaluru. Records who charged, where,
+              when, how much energy was consumed, and the cost incurred.
+Rows        : 114,000
+Columns     : 7
+Primary Key : session_id
+Foreign Keys: customer_id  -> customers.csv
+              station_id   -> charging_stations.csv
+--------------------------------------------------------------------------------
+
+COLUMN              DATA TYPE   RANGE / VALUES            DESCRIPTION
+--------------------------------------------------------------------------------
+session_id          Text        S00001 to S114000         Unique identifier for each
+                                                          charging session. Format:
+                                                          S followed by 5-digit number.
+
+customer_id         Text        C0001 to C8000            Identifier of the customer who
+                                                          initiated the session. Links to
+                                                          customers.csv for demographic
+                                                          and vehicle information.
+
+station_id          Integer     2 to 197                  Identifier of the charging
+                                                          station used. Links to
+                                                          charging_stations.csv. Note:
+                                                          IDs are not sequential; gaps
+                                                          exist in the numbering.
+
+session_start_time  Text        2024-08-01 to             Timestamp when the charging
+                   (datetime)   2024-12-31                session began. Format:
+                                                          YYYY-MM-DD HH:MM:SS. Covers
+                                                          approximately 5 months of
+                                                          operational data.
+
+kwh_charged         Decimal     1.74 to 84.63             Total energy delivered to the
+                                                          vehicle during the session in
+                                                          kilowatt-hours. Varies by
+                                                          battery size, state of charge
+                                                          at arrival, and session
+                                                          duration.
+
+cost_per_kwh        Decimal     13.5 / 18.0 / 22.5        Per-unit tariff applied to the
+                                                          session in Rupees per kWh.
+                                                          Matches the three tariff tiers
+                                                          in the ROI dataset. Determined
+                                                          by the station's charger type.
+
+total_cost          Decimal     23.51 to 1,747.41         Total amount charged to the
+                                                          customer for the session in
+                                                          Rupees. Formula: kwh_charged ×
+                                                          cost_per_kwh. Verified accurate
+                                                          for all 114,000 records.
+================================================================================
+
+
+================================================================================
+TABLE 3: charging_stations.csv
+================================================================================
+Description : Reference table of 65 operational EV charging stations currently
+              active across 18 Bengaluru districts. Contains location, operator,
+              and capacity details for existing network infrastructure.
+Rows        : 65
+Columns     : 7
+Primary Key : station_id
+Joins to    : charging_sessions.csv  via  station_id
+              districts.csv          via  district_name
+--------------------------------------------------------------------------------
+
+COLUMN              DATA TYPE   RANGE / VALUES            DESCRIPTION
+--------------------------------------------------------------------------------
+station_id          Integer     2 to 197                  Unique identifier for the
+                                                          charging station. Not
+                                                          sequential; gaps in numbering
+                                                          suggest historical deletions
+                                                          or a broader network system
+                                                          from which this is a subset.
+
+district_name       Text        18 distinct values        Name of the Bengaluru district
+                                e.g. Jayanagar,           where the station is located.
+                                Marathahalli,             Maps to district_name in
+                                Banashankari              districts.csv and District in
+                                                          the ROI dataset.
+
+income_tier         Text        High                      Economic classification of the
+                                Mid-Range                 district where the station
+                                Low-Mid                   operates. Inherited from
+                                                          districts.csv. Useful for
+                                                          segment-level analysis.
+
+operator_name       Text        BPCL Pulse                Name of the company operating
+                                Tata Power                the charging station. Indicates
+                                Statiq                    competitive landscape. Five
+                                ChargeZone                operators present; Tata Power
+                                Ather Grid                is one of them.
+
+plugs_count         Integer     6 (uniform)               Number of charging connectors
+                                                          at the station. Currently
+                                                          uniform at 6 for all 65
+                                                          stations. NOTE: This is
+                                                          flagged as a likely data
+                                                          placeholder. Field validation
+                                                          recommended before using for
+                                                          capacity planning.
+
+latitude            Decimal     12.708 to 13.115          Geographic latitude of the
+                                                          station in decimal degrees
+                                                          (WGS84). Bengaluru city range.
+                                                          Used for spatial and corridor
+                                                          analysis.
+
+longitude           Decimal     77.482 to 77.766          Geographic longitude of the
+                                                          station in decimal degrees
+                                                          (WGS84). Used with latitude
+                                                          for mapping and proximity
+                                                          analysis.
+================================================================================
+
+
+================================================================================
+TABLE 4: customers.csv
+================================================================================
+Description : Profile table for 8,000 registered EV customers in the Bengaluru
+              network. Contains income segment, vehicle model, and battery
+              specifications. Used to understand demand patterns and segment
+              charging behaviour.
+Rows        : 8,000
+Columns     : 4
+Primary Key : customer_id
+Joins to    : charging_sessions.csv  via  customer_id
+--------------------------------------------------------------------------------
+
+COLUMN              DATA TYPE   RANGE / VALUES            DESCRIPTION
+--------------------------------------------------------------------------------
+customer_id         Text        C0001 to C8000            Unique identifier for each
+                                                          registered customer. Format:
+                                                          C followed by 4-digit number.
+                                                          Sequential with no gaps.
+
+income_tier         Text        High                      Economic classification of the
+                                Mid-Range                 customer based on household
+                                Low-Mid                   income. Consistent with tier
+                                                          definitions used across all
+                                                          datasets. Distribution approx:
+                                                          Low-Mid = 49.9% (3,990),
+                                                          Mid-Range = ~35%, High = ~15%.
+
+car_model           Text        25 distinct models        EV model owned by the customer.
+                                e.g. Ampere Nexus         Ranges from entry-level two-
+                                Mahindra XUV400           wheelers and small EVs to
+                                MG Comet EV               premium SUVs. Most common
+                                Tata Punch EV             model: Ampere Nexus (536
+                                                          customers). Used to infer
+                                                          typical battery size and
+                                                          charging needs.
+
+battery_capacity_   Decimal     12.0 to 95.0              Battery capacity of the
+kwh                                                       customer's vehicle in kWh.
+                                                          Directly determines maximum
+                                                          energy per session. Small EVs
+                                                          (e.g. MG Comet) have ~12–17
+                                                          kWh; premium SUVs (e.g.
+                                                          Mercedes EQS) up to 95 kWh.
+                                                          Average: 31.4 kWh.
+================================================================================
+
+
+================================================================================
+TABLE 5: districts.csv
+================================================================================
+Description : Master reference table for all 18 Bengaluru districts included in
+              the network planning exercise. Contains demand forecast metrics
+              used as targets for infrastructure sizing and ROI projections.
+Rows        : 18
+Columns     : 5
+Primary Key : district_name
+Joins to    : charging_stations.csv       via  district_name
+              roi_bengaluru_districts.csv  via  District
+--------------------------------------------------------------------------------
+
+COLUMN              DATA TYPE   RANGE / VALUES            DESCRIPTION
+--------------------------------------------------------------------------------
+district_name       Text        18 unique values          Name of the Bengaluru district.
+                                e.g. Indiranagar,         Serves as the primary key and
+                                Koramangala,              join key for all other datasets.
+                                Whitefield                All 18 districts are fully
+                                                          represented across every table.
+
+income_tier         Text        High (3 districts)        Economic classification of the
+                                Mid-Range (7 districts)   district. Determines tariff
+                                Low-Mid (8 districts)     tier expectations, willingness
+                                                          to pay, and charger type
+                                                          suitability.
+
+projected_evs       Integer     600 to 3,600              Forecast number of EVs expected
+                                                          to be operational in the
+                                                          district within the planning
+                                                          horizon (3–5 years). Primary
+                                                          demand input for station sizing.
+                                                          Average: 1,956. Highest:
+                                                          Jayanagar (3,600).
+
+projected_plugs     Integer     18 to 109                 Forecast number of charging
+                                                          plugs required across all
+                                                          stations in the district to
+                                                          meet projected EV demand.
+                                                          Derived from projected_evs
+                                                          using assumed utilisation
+                                                          rates. Average: 59.
+
+projected_regular_  Integer     120 to 720                Forecast number of customers
+customers                                                 who will charge regularly
+                                                          (multiple times per week) at
+                                                          stations in the district.
+                                                          Represents the loyal,
+                                                          recurring revenue base.
+                                                          Approximately 20% of
+                                                          projected_evs. Average: 391.
+================================================================================
+
+
+================================================================================
+CROSS-DATASET RELATIONSHIPS
+================================================================================
+
+  charging_sessions.customer_id  -->  customers.customer_id
+      Each session is linked to one registered customer.
+      114,000 sessions across 8,000 customers (avg ~14.25 sessions/customer).
+
+  charging_sessions.station_id  -->  charging_stations.station_id
+      Each session occurred at one of 65 operational stations.
+      All session station_ids verified present in charging_stations.
+
+  charging_stations.district_name  -->  districts.district_name
+      Each station belongs to one of 18 districts.
+      All station districts verified present in districts master table.
+
+  roi_bengaluru_districts.District  -->  districts.district_name
+      Each proposed project is in one of the 18 planning districts.
+      ROI table uses 'District'; districts table uses 'district_name'.
+
+
